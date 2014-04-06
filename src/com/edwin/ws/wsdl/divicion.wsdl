@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/divicion/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="divicion" targetNamespace="http://www.example.org/divicion/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/divicion/">
+      <xsd:element name="divisor" type="xsd:integer" />
+      <xsd:element name="numero" type="xsd:integer" />
+      <xsd:element name="resulta" type="xsd:integer" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="divisionRequest">
+    <wsdl:part element="tns:numero" name="numeroPar"/>
+    <wsdl:part name="divisorPar" element="tns:divisor" />
+  </wsdl:message>
+  <wsdl:message name="divisionResponse">
+    <wsdl:part element="tns:resulta" name="resultado"/>
+  </wsdl:message>
+  <wsdl:portType name="Divicion_PortType">
+    <wsdl:operation name="division">
+      <wsdl:input message="tns:divisionRequest"/>
+      <wsdl:output message="tns:divisionResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="divicionSOAP" type="tns:Divicion_PortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="division">
+      <soap:operation soapAction="http://www.example.org/divicion/NewOperation"/>
+      <wsdl:input>
+        <soap:body parts="numeroPar" use="literal"/>
+        <soap:body parts="divisorPar" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="resultado" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DivicionServices">
+    <wsdl:port binding="tns:divicionSOAP" name="divicion_Port">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
